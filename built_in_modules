@@ -1,0 +1,35 @@
+import random
+# x = random.randint(1,10)
+# # print(x)
+# # Вариант, если хотим воспользоваться только одной функцией из модуля
+# # from random import randint
+# # В этом случае запись должна быть:
+# # x = randint(1, 10)
+# x = random.randint(1, 10)
+# print(x)
+
+# from random import shuffle
+# my_list = [1, 2, 3]
+# # shuffle(my_list)
+# random.shuffle(my_list)
+# print(my_list)
+
+# Имеется возможность импортировать функцию из модуля, но под своим модулем
+
+# from random import shuffle as shuffle_my_list #Мы вызвали функцию shuffle и назначили ей свое имя shuffle_my_list
+# my_list = [1, 2, 3]
+# shuffle_my_list(my_list)
+# print(my_list)
+
+
+
+# Hometask
+
+x = 123456789
+y = 987
+z = 876
+
+import math
+print(math.sqrt(x))
+print(math.factorial(y))
+print(math.pow(876, 54))
