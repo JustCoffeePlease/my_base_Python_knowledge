@@ -1,0 +1,42 @@
+FIRST
+
+# __name__ это предопределенная втроенная переменная
+# Этой переменной присваивается строковое значение в зависимости от того,
+# как запущен файл
+# Если мы запускаем этот файл прямо безимпортно, то этой переменной присваивается
+# значение __main__ автоматически
+
+# __name__ == '__mail__'
+
+def function_1():
+    print('function_1() from first.py')
+
+print('Top level in first.py')
+
+if __name__ == '__main__':
+    print('first.py is being run directly')
+else:
+    print('first.py has been imported')
+
+# Top level in first.py мы получаем вначале, так как сработала команда print
+# Далее при проверке if __name__ == '__main__' выводится строка first.py is being run directlу
+# Так как мы запустики файл first.py непосредственно, а не импортировали, именно поэтому вывелась эта строка,
+# таким образов, условие __name__ == '__main__' выполняется
+
+
+SECOND
+
+first.function_1()
+
+if __name__ == '__main__':
+    print('first.py is being run directly')
+else:
+    print('first.py has been imported')
+
+# Так ккак мы импортировали first, то у нас запускается этот файл и срабатывает команда print('Top level in second.py')
+# Далее идет условный оператор if __name__ == '__main__'. Переменной __name__ не было присвоено значение '__main__',
+# Именно поэтому выводится first.py has been imported.
+# Далее, когда уже закончился код в модуле first.py запускается команда print('Top level in second.py'),
+# далее запускается first.function_1(), которая выводит 'function_1() from first.py
+# и далее, уже в second.py при проверке if __name__ == '__main__', так как мы его запустили непосредственно,
+# в этом случае он не был импортирован, срабатывает первая ветка кода
