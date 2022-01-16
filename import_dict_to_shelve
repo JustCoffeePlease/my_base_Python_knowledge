@@ -1,0 +1,36 @@
+import shelve
+# После первичного запуска программы, функция print записала все данные
+# в файл. После этого все вводные данные можгно закомментировать
+# monday_schedule = ['Math', 'English language', 'System programming', 'Python']
+# tuesday_schedule = ['English language', 'HTML', 'Python', 'Football']
+# wednesday_schedule = ['Physics', 'English language', 'Python']
+# thursday_schedule = ['Math', 'Chemistry', 'Java']
+# friday_schedule = ['Running', 'Math', 'Python']
+
+with shelve.open('schedules', writeback=True) as schedules:
+    # schedules['Monday'] = monday_schedule
+    # schedules['Tuesday'] = tuesday_schedule
+    # schedules['Wednesday'] = wednesday_schedule
+    # schedules['Thursday'] = thursday_schedule
+    # schedules['Friday'] = friday_schedule
+    # Добавим в расписание плаванье
+    # schedules['Thursday'].append('Swimming')
+    # Таким образом мы добавляем данные в копию списка. shelve не знает, что эти списки были изменены
+    # При запуске программы, изменений не будет
+    # Имеется два способа обновления информации в shelve:
+    # 1.Помещение новых данный в новый временный список, а затем уже полностью заменить в файле
+    # данный объект по ключу
+
+    # temp_list =schedules['Thursday']
+    # temp_list.append('Swimming')
+    # schedules['Thursday'] = temp_list
+
+    # 2. Более короткий способ: При создании shelve при помощи with, после имени файла в скобках, добавить
+    # writeback = True. Все данные помещаются после закрытия блока with, и если идет много обновлений, то
+    # процессор может быть перегружен. Такой способ применяется, когда объем обновляемых данных не велик
+    # В иномм случае, оптимально использовать первый способ
+
+    schedules['Thursday'].append('English language')
+
+    for key in schedules:
+        print(key, schedules[key])
