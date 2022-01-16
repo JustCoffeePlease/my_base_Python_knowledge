@@ -1,0 +1,90 @@
+# Сериализация с помощью модуля pickle Удобна, но она имеет один недостаток.
+# Этот модуль помещает все файлы в память компьютера, когда объектов много, либо они достаточно тяжелые
+# происходит перегрузка компьютера
+# Имеется альтернатива - shelve
+# Этот модуль представляет собой хранение данных на подобии словаря при помощи пары ключ-значение
+# Ключевое отличие от pickle в том, что данные хранятся в файле, а не в памяти компьютера
+# Ключи должны быть строкового типа (В отличие от словаря - там все равно)
+# Все методы в dict могут быть применены в shelve
+# shelve своего рода сохраненный в файле словарь
+# Поэтому очень удобно конвертировать код с использованием dict в словари shelve
+import shelve
+
+with shelve.open('shelve_test') as cars:
+    # После того, как вы вывели первый раз значения, они сохранены в файле и
+    # их определение можно закомментировать, но мы все равно должны обращаться
+    # к shelve внутри блока
+    # cars['opel'] = 'Germany'
+    # cars['ford'] = 'USA'
+    # cars['mazda'] = 'Japan'
+    # cars['renault'] = 'France'
+# Только внутри объекта shelve мы можем указывать обращения к нему. За объектом обращение не сработает
+# При использовании with-блока, файл автоматически закрывается после того как мы выходим из этого блока
+#     print(cars['ford'])
+#     print(cars['renault'])
+#     print(cars.get('ope')) #Получим объект None
+#     print(cars['opel'])
+# # Для удаления какого-либо ключа можно использовать функцию del
+# #     del cars['mazda']
+# # print(cars['mazda'])
+#
+# # Мы можем добавлять новые объекты в cars по ключу
+#     cars['kia'] = 'South Korea'
+#
+#     # for key in cars:
+#     #     print(key)
+#     for key in cars:
+#         print(key + ': ' + cars[key])
+
+# Пробуем более сложную манипуляцию
+
+    # while True:
+    #     key = input('Please input car name ')
+    #     if key == 'quit': # По вводу quit (выход) произойдет выход из цикла
+    #         break
+    #     country = cars.get(key, "We don\'t have a " + key)
+    #     print(country)
+
+    # while True:
+    #     key = input('Please input car name ')
+    #     if key == 'quit': # По вводу quit (выход) произойдет выход из цикла
+    #         break
+    #     if key in cars:
+    #         # Мы проверяем, есть ли такой ключ в этом объекте
+    #         # только в этом случае мы присваеваем переменной country
+    #         # значения, которые будем извлекать.
+    #         # Мы можем обращаться напрямую по этому ключу
+    #         country = cars[key]
+    #     # Так как мы уже проверили наличие key в cars, ошибки не будет
+    #         print(country)
+    #     else:
+    #         print('We din\'t have a ' + key)
+
+# Логика двух предыдущих блоков одинаковая, но во втором случае мы дополнительно проверяем наличие
+# key в cars
+
+# Распечатаем все ключи и значения
+#     for key in cars:
+#         print(key + ' ' + cars[key])
+# Мы извлекаем всю информацию, но она не отсортирована и выводится в случайном порядке.
+# Извлечение с сортировкой
+#     ordered_keys_list = list(cars.keys())
+#     ordered_keys_list.sort()
+#     for key in ordered_keys_list:
+#         print(key + ' ' + cars[key])
+
+# Мы так же можем получить не только ключи, но и значения
+    for value in cars.values():
+        print(value)
+    print(cars.values())
+    print(type(cars.values()))
+
+    for key in cars.keys():
+        print(key)
+    print(cars.keys())
+    print(type(cars.keys()))
+
+    for item in cars.items():
+        print(item)
+    print(cars.items())
+    print(type(cars.items()))
