@@ -1,0 +1,61 @@
+class Swimmable:
+    def __init__(self, name):
+        print('Method init() of Swimmable')
+        self.name = name
+
+    def greeting(self):
+        print(f'Hello! my name is {self.name} and I can swim')
+
+    def swim(self):
+        print('I\'m swimming')
+
+
+class Walkable:
+    def __init__(self, name):
+        print('Method init() of Walkable')
+        self.name = name
+
+    def greeting(self):
+        print(f'Hello! my name is {self.name} and I can walk')
+
+    def walk(self):
+        print('I\'m walking')
+
+
+class Flyable:
+    def __init__(self, name):
+        print('Method init() of Flyable')
+        self.name = name
+
+    def greeting(self):
+        print(f'Hello! my name is {self.name} and I can fly')
+
+    def fly(self):
+        print('I\'m flying')
+
+
+class GameCharacter(Swimmable, Walkable, Flyable):
+    def __init__(self, name):
+        print('Method init() of Gamecharacter')
+        self.name = name
+        Swimmable.__init__(self, name)
+        Walkable.__init__(self, name)
+        Flyable.__init__(self, name)
+
+    def greeting(self):
+        print(f'Hello! my name is {self.name}')
+
+
+james = GameCharacter('James') # Методы срабатывают в том же порядке, в котором они указаны в классе Gamecharacter
+
+james.greeting()
+james.swim()
+james.walk()
+james.fly()
+#
+print(isinstance(james, Swimmable))
+print(isinstance(james, Walkable))
+print(isinstance(james, Flyable))
+print(isinstance(james, GameCharacter))
+print(isinstance(james, dict))
+print(isinstance(james, object))
