@@ -1,0 +1,68 @@
+# # input
+# x = input('Enter something ')
+#
+# # output
+# print('Output something ' + x)
+
+# Чтение из файла и ввод в программу программируется из трех шагов:
+# 1 - открыть сам файл при помощи встроенной функции
+# 2 - считать все данные из файла либо построчно, либо целиком весь текст
+# 3 - закрыть файл, из которого считываются данные (Очень важно, так как если его не закрыть, он может повредиться)
+
+# lorem_ipsum_text = open('sample.txt')
+# for line in lorem_ipsum_text: # Вывод построчно при помощи цикла
+#     #print(line) # Вывод текста с пропуском строк. В функции print по умолчанию заложен перенос на новую строку end = '\n'
+#     print(line, end='') # Вывод текста без пропуска строк, так как в файле уже есть переход на новую строку
+# lorem_ipsum_text.close() # Обязательно закрываем файл
+
+# Тонкость функции print
+# print(1, 2, 3, sep=':', end='\n')
+# print(1, 2, 3, sep=',', end=' ')
+# print(1, 2, 3, sep=';', end='')
+
+
+# for line in lorem_ipsum_text:
+#     if 'mary' in line.lower():
+#         print(line, end='')
+#
+# lorem_ipsum_text.close()
+
+
+# with open('sample.txt') as lorem_ipsum_text:
+# # Открываем файл по указанномму пути и обращаемся к нему как lorem_ipsum_text
+#     for line in lorem_ipsum_text:
+#         if 'mary' in line.lower():
+#           print(line, end='')
+# # После такого открытия файла можно не прописывать закрытие файла, так как оператор
+# # with автоматически закрывает файл после работы над ним (файлом)
+
+
+# метод readline
+# Прочтение файла построчно
+# with open('sample.txt', 'r') as lorem_ipsum_text:   'r' - значит читать
+#     line = lorem_ipsum_text.readline()
+#     # print(line)  # Распечатываестя только первая строка текста
+#     while line:
+#         print(line, end='')
+#         line = lorem_ipsum_text.readline()
+
+# В начале мы помещаем в переменную line lorem_ipsum_text с методом readline() - вызывается первая строка
+# Если переменная line не пустая, то запускается цикл while, в котором мы выводим остальной текст
+# Если переменная пустая, то цикл while будет остановлен и будет выполняться дальнейший код
+
+
+# readlines - прочтение всех строк
+
+# with open('sample.txt', 'r') as lorem_ipsum_text:
+#     lines = lorem_ipsum_text.readlines()
+# # print(line) # Весь текст выводится в одну строку
+
+# for line in lines[::-1]: # [::-1] Печать с последней строки до первой
+#     print(line, end='')
+
+
+#  read - прочтение всего текста
+
+with open('sample.txt', 'r') as lorem_ipsum_text:
+    text = lorem_ipsum_text.read()
+print(text)
