@@ -1,0 +1,113 @@
+# def simple_function():
+#     # print('Some code before the old code')
+#     print('Simple function code')
+#     # print('Some code after the old code')
+#
+# simple_function()
+# # Рассмотрим случай, когда нам необходимо использовать код функции simple_function()
+# # но при этом нужно добавить какой-то дополнительный код, то есть мы хотим расширить simple_function()
+# # Мы можем отредактировать simple_function(), но при этом мы потеряем ее изначальный функционал
+# # Если нам нужно использовать и старый функционал и новый, можно использовать декораторы
+#
+# def decorator_function(original_function):
+#     def wrap_function():
+#         print('Some code before the old code')
+#         original_function()
+#         print('Some code after the old code')
+#     return wrap_function
+#
+#
+# decorated_function = decorator_function(simple_function)
+# decorated_function()
+#
+# # Вывод:
+# # Some code before the old code
+# # Simple function code
+# # Some code after the old code
+#
+# # Для того, чтобы отключить код, нужно использовать запись @ в начале
+#
+#
+# @decorator_function
+# def simple_function():
+#     print('Simple function code')
+#
+# simple_function()
+
+# Вывод:
+# Some code before the old code
+# Simple function code
+# Some code after the old code
+
+# Если мы хоти использовать simple_function() по старому, мы можем закомментировать @decorator_function
+# тогда при вызове simple_function() мы получим вывод:
+# Simple function code
+
+def make_compliment(func):
+    def wrapper(*args, **kwargs):
+        print('Nice to meet you')
+        func(*args, **kwargs)
+        print('You looks great')
+    return wrapper
+
+
+@make_compliment
+def ask_name():
+    """
+    This function just asking "What is your name?"
+    :return: Nothing
+    """
+    print('What is your name?')
+#
+# # Создадим декоратор для этой функции. Для этого, перед ней напишем @make_comliment
+ask_name()
+# Без использования декоратора мы получим вывод:
+# What is your name?
+# С использованием декоратора @make_comliment мы получим вывод:
+# Nice to meet you
+# What is your name?
+# You looks great
+
+
+# Функция называется декоратором потому что она декорирует исходную функцию,
+# Добавляет "обертку", внутри которой используется старая функция
+# и добавляется какая-то новая функциональность
+
+
+# Ранее мы рассматривали фунции, которым не передаются аргументы
+# Рассмотрим функцию с аргументом
+
+@make_compliment # Если использовать этот декоратор, чтобы избежать TypeError, нужно, чтобы функция wrapper()
+# принимала необходимы позиционный аргумент, в данном случае name.
+def say_name(name):
+    print(f'My name is {name}')
+
+
+say_name('Jake')
+# Вывод:
+# Nice to meet you
+# My name is Jake
+# You looks great
+
+# Если мы захотим использовать функции say_name(name) и ask_name()
+# с использованием декоратора @make_compliment, то мы получим ошибку, так как  ask_name()
+# не принимает позиционного значения name, как это делает say_name(name).
+# Чтобы избежать ошибки, мы можем использовать *args и *kwargs в wrapper(*args, **kwargs)
+# Тогда мы можем передавать любое количество аргументов и обе задекорированные функции сработают
+
+# Вывод:
+# Nice to meet you
+# What is your name?
+# You looks great - это сработала задекорированная ask_name()
+# Nice to meet you
+# My name is Jake
+# You looks great - это сработала задекорированная say_name()
+
+
+# Пример случая, когда используется **kwargs
+@make_compliment
+def order(food, drink):
+    print(f'I would like {food} and {drink}')
+
+
+order(food='chips', drink='coke')
