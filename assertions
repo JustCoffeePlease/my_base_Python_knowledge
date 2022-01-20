@@ -1,0 +1,49 @@
+# Testing is a writing the test code that checks bugs in our code
+# Assertions - Утверждение.  При помощи assertions можно делать простые утверждения и проверять их на истинность
+# или ложность. В случае истинности утверждения ничего не происходит, то есть продолжается выполнение кода.
+# В случае ложности, вызывается assertions error
+
+# assert 2 + 2 == 4
+# assert 2 + 2 == 5, '2 + 2 must equals 4'
+
+
+# def divide(a, b):
+#     assert b != 0, 'b must not be equals 0'
+#     return a / b
+#
+# print(divide(22, 11))
+# print(divide(22, 0))
+
+
+# def multiply_positive_numbers(a, b):
+#     assert a > 0 and b > 0, 'a and b must be positive'
+#     print(a * b)
+#
+#
+# multiply_positive_numbers(15, 3)
+# # Output:
+# # 45
+# multiply_positive_numbers(15, -3)
+# # Output:
+# # AssertionError: a and b must be positive
+
+
+def get_access(password):
+    password_list = [111, 222, 333, 444, 123, 234, 456]
+    assert int(password) in password_list, 'Password is invalid'
+    print('Welcome back')
+
+
+pasword_1 = input('Please, input your password: ')
+get_access(pasword_1)
+# В optimized режиме, при работе с cmd, assert не работает
+
+################################################################
+def get_access(password):
+    password_list = [111, 222, 333, 444, 123, 234, 456]
+    assert int(password) in password_list, 'Password is invalid'
+    print('Welcome back')
+
+
+pasword_1 = input('Please, input your password: ')
+get_access(pasword_1)
