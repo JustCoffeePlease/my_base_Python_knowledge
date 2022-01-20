@@ -1,0 +1,82 @@
+# Существует возможность вызвать ошибку при помощи написания ключевого слова raise
+# Это может понадобиться, когда, например мы написали функцию, которая принимает
+# параметры определенного типа, но при вызове функции, пользователь помещает параметры другого типа.
+# Тогда возможно выбросить ошибку с пояснением, когда какие параметы нужно передавать эту функцию
+# raise ValueError('Invalid value')
+# Возможно вызывать ошибку без ввода текста
+
+# def get_rainbow_color(color_number):
+# # При создании функции, желательно создавать документацию с описанием
+#     '''
+#
+#     :param color_number: Color number must be integer type
+#     and must be in range of integer from 1 to 7
+#     :return:
+#     '''
+# # Функция будет по числу определять цвет радуги
+#     color_number_list = [1, 2, 3, 4, 5, 6, 7]
+#     if type(color_number) is not int:
+#         raise ValueError('Color number must be integer type')
+#     if color_number not in color_number_list:
+#     # Если передаваемый параметр имеет значение, которого нет в списке
+#     # то мы выбрасываем ошибку
+#         raise ValueError('Color number must be in range of integer from 1 to 7')
+#     if color_number == 1:
+#         return 'red'
+#     elif color_number == 2:
+#         return 'orange'
+#     elif color_number == 3:
+#         return 'yellow'
+#     elif color_number == 4:
+#         return 'green'
+#     elif color_number == 5:
+#         return 'blue'
+#     elif color_number == 6:
+#         return 'indigo'
+#     elif color_number == 7:
+#         return 'violet'
+
+
+# color = get_rainbow_color(1.0)
+# print(color)
+# При выводе get_rainbow_color(8) мы получаем None
+# В дальнейшем, используя это значение мы можем получить ошибку.
+# Для удобства мы создадим перед оператором if мы создали список color_number_list, в котором будут
+# все валидные значения, которые можно будет передавать в эту функцию
+
+def colorize_text(color_number, text):
+    # При создании функции, желательно создавать документацию с описанием
+    '''
+
+    :param color_number: Color number must be integer type
+    and must be in range of integer from 1 to 7
+    :param text: text must be string type
+    :return:
+    '''
+    # Функция будет по числу определять цвет радуги
+    color_number_list = [1, 2, 3, 4, 5, 6, 7]
+    if type(color_number) is not int:
+        raise ValueError('Color number must be integer type')
+    if color_number not in color_number_list:
+        # Если передаваемый параметр имеет значение, которого нет в списке
+        # то мы выбрасываем ошибку
+        raise ValueError('Color number must be in range of integer from 1 to 7')
+    if type(text) is not str:
+        raise ValueError('Text must be string type')
+
+    if color_number == 1:
+        print('red ' + text)
+    elif color_number == 2:
+        print('orange ' + text)
+    elif color_number == 3:
+        print('yellow ' + text)
+    elif color_number == 4:
+        print('green ' + text)
+    elif color_number == 5:
+        print('blue ' + text)
+    elif color_number == 6:
+        print('indigo ' + text)
+    elif color_number == 7:
+        print('violet ' + text)
+
+colorize_text(4, True)
