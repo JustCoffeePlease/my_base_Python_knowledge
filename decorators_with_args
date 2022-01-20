@@ -1,0 +1,122 @@
+# Создадим декоратор с аргументами
+# Этот декоратор будет проверять первый аргумент задекорированной функции, и
+# если этот аргумент не равен заданному значению, то он будет распечатывать этот декоратор
+# from functools import wraps
+# def check_if_first_arg_is(value):
+# # Для того, чтобы создать декоратор, принимающий аргументы, нужно создать дополнительный слой,
+# # то есть нужна дополнительная inner функция, которая принимает в качестве параметра функцию
+# # в качестве параметра, которую мы будем декорировать.
+# # Внешняя часть декоратора принимает значение, которое мы будем проверять
+#     def inner_dec(func):
+#         @wraps(func)
+#         def wrapper(*args, **kwargs):
+#             # Удостоверимся, что первый принимаемый аргумент будет равен value
+#             # Для начала удостоверимся, существует ли вообще args
+#             if args and args[0] != value:
+#                 print(f'First args has to be {value}')
+#             return func(*args, **kwargs)
+#         return wrapper
+#     return inner_dec
+# # Таким образом, у нас имеется еще один декоратор, который декорирует внутреннюю часть wrapper
+# # так как во внешней части мы передаем значение, которое будем проверять, и уже во внутренней
+# # части, в wrapper, мы передаем функцию, которую будем декорировать
+#
+# @check_if_first_arg_is('orange')
+# def print_rainbow_colors(*colors):
+#     print(colors)
+#
+#
+# @check_if_first_arg_is(7)
+# def multiply_7(a, b):
+#     return a * b
+#
+# print_rainbow_colors('red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet')
+# # Вывод:
+# # First args has to be orange
+# # ('red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet')
+#
+# print(multiply_7(8, 3))
+# # Вывод:
+# # First args has to be 7
+# # 24
+
+
+# Создадим декоратор, который будет приводить к нужному типу аргументы декорируемой функции
+# def enforce(*types):
+#     def inner_dec(func):
+#         @wraps(func)
+#         def wrapper(*args, **kwargs):
+#             new_args = []
+#             for a, t in zip(args, types):
+#                 # a - args, t - types, zip() - Создает из двух последовательностей новую последовательность,
+#                 # в которой каждому элементу первой последовательности будет будет сопоставлен элемент
+#                 # второй последовательности
+#                 new_args.append(t(a))
+#             return func(*new_args, **kwargs)
+#         return wrapper
+#     return inner_dec
+#
+#
+# @enforce(str, int)
+# def print_text_n_times(text, n):
+#     for num in range(n):
+#         print(text)
+#
+#
+# # print_text_n_times('Hola', '5')
+# # Вывод: TypeError: 'str' object cannot be interpreted as an integer
+# # в функции range мы не можем использовать значения строкового типа.
+# # Если перед функцией print_text_n_times поставить декоратор @enforce(str, int),
+# # то строковое значение '5' будет преобразовываться в int, и функция сможет запуститься.
+# # это происходит при помощи записи new_args.append(t(a))
+# print_text_n_times('Hola', '5')
+#
+# # *args - ('Hola', '5')
+# # types - (str, int)
+# # При помощи функции zip(args, types) мы сопоставляем для каждого элемента args элемент types.
+# # zip(args, types) - ('Hola', str) ('5', int)
+# # Для каждого из этих элементов мы приводим, к str строку 'Hola', к int строку '5',
+# # после, в новый список мы добавляем значения, приведенные к нужному типу
+#
+# @enforce(float, float)
+# def dev(a, b):
+#     return a / b
+#
+# print(dev(4, 2))
+# print(dev('4', '2'))
+
+
+
+# Hometast
+# Создайте функцию-декоратор wait, которая задерживает выполнение кода функции, которую она декорирует, на n секунд.
+# Аргумент n должен передаваться в декоратор. Воспользуйтесь функцией для задержки выполнения кода.
+# Найдите информацию об использовании этой функции в интернете самостоятельно.
+# Также после задержки должно выводится сообщение "There was a pause {количество секунд}
+# seconds before execution {имя задекорированной функции }"
+
+from functools import wraps
+from random import choice
+import time
+
+
+def wait(n):
+    def inner_func(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            time.sleep(n)
+            print(f'There was a pause {n} seconds before execution {func.__name__}')
+            return func(*args, **kwargs)
+        return wrapper
+    return inner_func
+
+@wait(5)
+def some_func():
+    goodbye_tuple = ('Bye', 'See you latter', 'Have a good time', 'See you soon', 'Goodbye')
+    farewell = choice(goodbye_tuple)
+    return farewell
+
+
+print(some_func())
+# Output:
+# There was a pause 5 seconds before execution some_func
+# See you soon
