@@ -1,0 +1,35 @@
+
+# for number in range(1, 10):
+#     print(number)
+# Создадим класс, похожий на range
+
+# Имплементируем поведение функции range
+class MyRange:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+        self.current = start
+    # Чтобы класс стал Iterable необходимо имплементировать метод iter
+    def __iter__(self):
+        return self
+    # Мы возвращаем параметр self, то есть сам вновь созданный объект
+    # Чтобы этот объект стал итератором нужно имплементировать (добавить) еще
+    # один метод __next__
+    def __next__(self):
+
+    #     if self.current < self.end:
+    #         number = self.current
+    #         self.current += 1
+    #         return number
+    # # Таким образом запускается бесконечный цикл. Чтобы его остановить, необходимо выбросить StopIteration
+    #     raise StopIteration
+    # Способ с использованием if
+        while self.current < self.end:
+            print(self.current)
+            self.current += 1
+        raise StopIteration
+
+
+first_range = MyRange(20, 30)
+for num in first_range:
+    print(num)
