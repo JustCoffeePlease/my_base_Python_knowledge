@@ -1,0 +1,64 @@
+# Iterate - Любой объект, элементы которого можно перебирать
+# Iterable objects
+
+number_list = [1, 2, 3, 4, 5]
+#
+# for num in number_list:
+#     print(num)
+#
+# for letter in 'my string':
+#     print(letter)
+
+# Iterator - Элементы объекта Iterable перебираются при помощи Iterator
+# Итераторы получаются при помощи iter
+# Далее, вызывая метод __next__() для этого же итератора, мы можем перебирать элементы этого объекта iterable
+
+
+number_list_iterator = iter(number_list)
+print(type(number_list_iterator))
+
+string_iterator = iter('my list')
+print(type(string_iterator))
+
+# Мы получаем определенный элемент последовательности при методе __next__()
+# print(number_list_iterator.__next__())
+# print(number_list_iterator.__next__())
+# print(number_list_iterator.__next__())
+# print(number_list_iterator.__next__())
+# print(number_list_iterator.__next__())
+#
+# print(string_iterator.__next__())
+# print(string_iterator.__next__())
+# print(string_iterator.__next__())
+# print(string_iterator.__next__())
+# print(string_iterator.__next__())
+# print(string_iterator.__next__())
+# print(string_iterator.__next__())
+
+# Так же, помимо использования метода __next__(), мы можем использовать функцию next, передавая
+# итератор в качестве параметра в эту функцию next()
+
+# print(next(number_list_iterator))
+# print(next(number_list_iterator))
+# print(next(number_list_iterator))
+# print(next(number_list_iterator))
+# print(next(number_list_iterator))
+def my_for_loop(iterable):
+    iterator = iter(iterable)
+    # print(iterator.__next__())  # При таком выводе мы получим только первый элемент объекта
+    # print(next(iterator)) # Так же неизвестна общая длина объекта
+    # Чтобы выводить итерацию всего объекта необходимо воспользоваться while
+    while True:
+        # Мы бесконечно выводим этот код.
+        # Так как цикл бесконечный
+        # и метод next запускается даже после того, как все элементы объекта были перебраны и далее
+        #  уже перебирать нечего, мы получаем ошибку StopIteration
+        # Чтобы ее обработать, мы помещаем в цикл while блок try
+        # И далее в except мы будем выходить в случае появления ошибки StopIteration
+        try:
+            print(iterator.__next__())
+        except StopIteration:
+            print('Iteration is finished')
+            break
+
+my_for_loop('Здоров бандиты')
