@@ -1,0 +1,100 @@
+# Метод wraps служит для того чтобы сохранять метаданные функции
+# Создадим декоратор, который будет описывать функцию squares_sum
+
+from functools import wraps
+def print_function_data(function):
+    """
+    This is decorator function
+    :param args:
+    :param kwargs:
+    :return:
+    """
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        print(f'You are using {function.__name__}')
+        print(f'Functions documentation {function.__doc__}')
+        return function(*args, **kwargs)
+    return wrapper
+
+@print_function_data
+def squares_sum(a, b):
+    """
+    :param a: first number
+    :param b: second number
+    :return: sum of squares first and second number: a**2 + b**2
+    """
+    return a ** 2 + b ** 2
+
+
+# print(squares_sum(2, 3))
+# 2 ** 2 = 4
+# 3 ** 2 = 9
+# 9 + 4 = 13
+# print(squares_sum.__doc__)
+# print(squares_sum.__name__)
+# print(help(squares_sum))
+# Вызывая методы __doc_._ и .__name__ для закекорированных функций,
+# мы получаем описание функции декоратора.
+# Чтобы получить описание нужной функции необходимо импортировать и воспользоваться методом wraps,
+# применив его к функции-декоратору, поставив его перед определением функции и указав в параметре функцию,
+# документация которой нас интересует.
+# Таким образом, при указании декоратора @wrap(), мы можем сохранять метаданные оригинальной функции,
+# чтобы в дальнейшем получать к ней доступ
+
+
+# Hometask
+# Создайте функцию-декоратор print_args, которая распечатывает аргументы *args и **kwargs функции, которую она декорирует
+
+from functools import wraps
+def showing_all_elements_of_func(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        """
+        :param func:
+        :return: list of outer function elements
+        """
+        elements_list = []
+        for item in args, kwargs:
+            elements_list.append(item)
+        print(elements_list)
+        return func(*args, **kwargs)
+    return wrapper
+
+
+@showing_all_elements_of_func
+def my_sum(*args):
+    """
+    This function sum all entered numbers
+    :param args:
+    :return: sum of all args
+    """
+    sum_list = []
+    for item in args:
+        sum_list.append(item)
+    print('The sum all elements is')
+    return sum(sum_list)
+
+
+first_sum = my_sum(5, 8, 11)
+print(first_sum)
+# print(help(my_sum))
+
+
+
+# From Youra
+
+# def print_args(func):
+#     @wraps(func)
+#     def wrapper(*args, **kwargs):
+#         print("args:", args)
+#         print("kwargs:", kwargs)
+#         return func(*args, **kwargs)
+#     return wrapper
+#
+#
+# @print_args
+# def some_func():
+#     print('Some code')
+#
+#
+# some_func()
