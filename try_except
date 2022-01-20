@@ -1,0 +1,41 @@
+# Существует возможность обработки ошибок
+# Мы помещаем код, который может потенциально содержать ошибку в блок try
+# Следующим блоком except мы указываем, как мы обрабатываем эту ошибку
+# Для каждого блока ошибок можно делать несколько except
+# После того, как обнаружена ошибка, мы сразу переходим в соответствующий блок except,
+# минуя остальной код
+# print('Some code')
+# try:
+#     print(len(23))
+#     print(my_variable)
+# except NameError:
+#     print('NameError happend')
+# except TypeError:
+#     print('TypeError happend')
+# # В данном случае мы обработали эту ошибку и вывели, что Some error happend
+# # При этом программа отработала до конца
+# print('Code after error')
+
+user_dictionary = {'first name': 'Jack', 'last name': 'White', 'age': 24}
+# print(user_dictionary['first name'])
+# print(user_dictionary['name'])
+# Если воспользоваться встроенной функцией get, при вводе невалидного ключа,
+# ошибка обрабатывается и мы получаем на выходе None
+# print(user_dictionary.get('last name'))
+# print(user_dictionary.get('name'))
+# Создадим похожую функцию
+def get_dictionary_value(dictionary, key):
+    '''
+    if dictionary has not specified key, the function returns None
+    :param dictionary:
+    :param key:
+    :return:
+    '''
+    try:
+        return dictionary[key]
+    except KeyError:
+        return None
+
+print(get_dictionary_value(user_dictionary, 'age'))
+print(get_dictionary_value(user_dictionary, 'a'))
+print(get_dictionary_value(user_dictionary, 'first name'))
