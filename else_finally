@@ -1,0 +1,45 @@
+# If we have an error - except block fires and else block doesn't fire
+# If we haven't an error - else block fires and except block doesn't fire
+# finally blocj fires anyway
+
+# Разработаем код, при котором пользователь должен будет вводить число, пока он не введет нужное значение,
+# то есть ошибка не будет останавливать процедуру. Для этого весь код помещен в цикл while
+# while True:
+#     try:
+#         number = int(input('Enter some number: '))
+#         print(number / 2)
+#     except:
+#         print('You have to enter a number!')
+#     # Когда нет ошибки, срабатывает код в блоке else, то есть когда не срабатывает блок except
+#     else:
+#         print('Good job! This is actually number')
+#         break
+#     # Выход из цикла осуществится тогда, когда пользователь введет правильное значение
+#     finally:
+#         # finally блок выполняется в любом случае, когда есть ошибка, и когда ее нет
+#         print('Finally block')
+# print('Code after error handling')
+
+
+# Если мы работаем с файлами, открываем файл и производим с ним какую-то работу
+# в блоке finally мы можем закрывать файл, чтобы его не провредить
+
+def devide (x, y):
+    try:
+        return x / y
+    # Мы можем выводить текст самой ошибки
+    except ZeroDivisionError as error:
+        print('You can\'t devide by zero')
+        print(error)
+    except TypeError as error:
+        print('x and y must be numbers')
+        print(error)
+    else:
+        print('x was devided by y')
+    # При указании return, так как после выполнения, он закрывает функцию, блок else не выполнится никогда
+    # Но finally выполняется всегда, причем он выполняется до того, как возвращено значение
+    finally:
+        print('finally block')
+
+t = devide(4, 'w')
+print(t)
