@@ -1,0 +1,69 @@
+# Generation expression
+
+# Генератор создан при помощи функции генератора (с использованием yield)
+def get_number_from_range():
+    x = input('Enter the number for range ')
+    for number in range(10):
+        yield number
+
+
+counter = get_number_from_range()
+print(counter)
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+
+# Генератор создан при помощи Generation expression
+counter_1 = (number for number in range(10))
+print(counter_1)
+# print(next(counter_1))
+# print(next(counter_1))
+# print(next(counter_1))
+# print(next(counter_1))
+# print(next(counter_1))
+# print(next(counter_1))
+# print(next(counter_1))
+
+# print([number for number in range(10)]) # Получаем список чисел, когда добавляем квадратные скобки
+
+x = int(input('Enter any number for range: '))
+counter_2 = (number**2 for number in range(x))
+print(next(counter_2))
+print(next(counter_2))
+print(next(counter_2))
+print(next(counter_2))
+print(next(counter_2))
+
+
+
+COMPAIRING GENERATORS AND LISTS
+# print(sum([number for number in range(10)])) #list comprehension
+# print(sum(number for number in range(10))) #generation expression
+# Разница между list comprehension и generation expression в том, что в первом случае
+# при сложении элементов этого списка сначала создается сам список,
+# во втором случае получается один элемент из этого генератора в момент времени
+# В случае list comprehension, при больших значениях, высока нагрузка на процессор - снижается быстродействие программы
+# В случае generation expression, когда мы получаем доступ лишь к одному элементу в момент времени,
+# мы улучшаем быстродействие программы.
+# Проведем эксперимент с модулем time
+
+import time
+# При помощи этого модуля мы можем получать текущий момент времени
+list_start_time = time.time() # функция time() возвращает текущий момент времени
+print(sum([number for number in range(100000000)]))
+list_processing_time = time.time() - list_start_time
+
+gen_start_time = time.time()
+print(sum(number for number in range(100000000)))
+gen_processing_time = time.time() - gen_start_time
+
+print(f'list_processing_time is {list_processing_time}')
+print(f'gen_processing_time {gen_processing_time}')
