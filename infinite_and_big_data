@@ -1,0 +1,71 @@
+# Infinite process
+
+# def create_patterns():
+#     max_patterns_number = 14 # Максимальное количество узоров на куске ткани
+#     patterns = ('first pattern', # Все типы узоров
+#                 'second pattern',
+#                 'third pattern',
+#                 'forth pattern',
+#                 'fifth pattern',
+#                 'sixth pattern',
+#                 'seventh pattern')
+#     i = 0  # i используем в качестве счетчика
+#     result_list = []  # Список, в который помещаются узоры. Они будут помещаться max_patterns_number раз
+#     while len(result_list) <= max_patterns_number:
+#         if i >= len(patterns):  # Если порядковое число i больше количества объектов в patterns
+#             i = 0  # программа обнуляет значение i. Цикл будет повторяться,
+#                     # пока длина итогового листа не станет равна max_patterns_number
+#         result_list.append(patterns[i])
+#         i += 1
+#     return result_list
+#
+#
+# print(create_patterns())
+# В случае, если max_patterns_number будет достаточно большим значением, то результирующий список будет
+# занимать в памяти много места.
+# В данном случае, для того чтобы распечатать узор, необходимо обращаться только к определенному узору,
+# нет необходимости создавать список с количеством этих узоров, нам нужен всего один элемент в определенный
+# момент времени.
+# Именно этого мы можем достигнуть при помощи функции генератор
+
+def get_current_pattern():
+    patterns = ('first pattern',
+                'second pattern',
+                'third pattern',
+                'forth pattern',
+                'fifth pattern',
+                'sixth pattern',
+                'seventh pattern')
+    i = 0
+    while True: # Создадим бесконечный цикл
+        if i >= len(patterns):
+            i = 0
+        yield patterns[i]
+        i += 1
+
+current_pattern = get_current_pattern()
+print(current_pattern.__next__())
+print(current_pattern.__next__())
+print(current_pattern.__next__())
+print(current_pattern.__next__())
+print(current_pattern.__next__())
+print(current_pattern.__next__())
+print(current_pattern.__next__())
+
+# Hometask
+# Создайте функцию, возвращающую генератор, бесконечно вырабатывающий квадраты целых чисел, начиная с 1
+
+
+def get_infinite_square_generator():
+    x = 1
+    while True:
+        yield x**2
+        x += 1
+
+
+
+square_generator = get_infinite_square_generator()
+print(next(square_generator))
+print(next(square_generator))
+print(next(square_generator))
+print(next(square_generator))
