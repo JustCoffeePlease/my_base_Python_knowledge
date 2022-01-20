@@ -1,0 +1,125 @@
+# # Generators are iterators
+# # Generators can be created with generators functions
+# # Generators can be created with generation expressions
+# # Не каждый итератор может быть генератором, но каждый генератор - итератор
+#
+# def my_function(x):
+#     return x
+#
+# print(my_function(4))
+#
+# # Создадим первую функцию - генератор
+#
+# def count_up_to(x):
+#     count = 1
+#     while count <= x:
+#         # Когда мы применяем слово yield в функции, она становится автоматически генератором
+#         yield count
+#         count += 1
+# # Функция-генератор генерирует сам генератор (помещен в переменную counter).
+# # Функция запускается и после слова yiеld вырабатывается текущее значение, которое помещается в count
+# # После этого "функция становится на паузу", после этого значение возвращается в начало цикла,
+# # а count присваевается count + 1.
+# # При последующем запуске функции в count находится не 1, а 2, то есть запоминается предыдущее значение,
+# # оно не обнуляется, как в случае с обычнми функциями.
+# # При каждой печати выводится следующее значение функции (В обычном случае значения обнуляются)
+# print(count_up_to(4)) # получаем заданное значение х
+# counter = count_up_to(4)
+# # Так как функция является генератором, мы можем использовать соответствующие методы
+# # print(counter.__next__())
+# # print(counter.__next__())
+# # print(counter.__next__())
+# # print(counter.__next__())
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+# print(next(counter))
+
+# C помощью функции генератора мы можем получать последовательность и далее использовать эту последовательность в цикле
+
+# for number in count_up_to(10):
+#     print(number)
+
+
+# Hometask_1:
+# Создайте функцию-генератор get_week_day(), которая создаёт генератор, вырабатывающий один день недели за раз,
+# Дни недели должны начинаться с воскресенья и заканчиваться субботой.
+
+def get_week_day():
+    week_day_list = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    for day in week_day_list:
+        yield day
+
+
+
+generator = get_week_day()
+# print(generator.__next__())
+# print(generator.__next__())
+# print(generator.__next__())
+# print(generator.__next__())
+# print(generator.__next__())
+# print(generator.__next__())
+# print(generator.__next__())
+
+# Hometask_2
+# Создайте функцию even_odd(), создающую генератор, который будет попеременно вырабатывать строки 'even' и 'odd'.
+
+
+def even_odd():
+    even_odd_tuple = ('odd', 'even')
+    while True:
+        for let in even_odd_tuple:
+            yield let
+            if let == even_odd_tuple[0]:
+                let = even_odd_tuple[1]
+            else:
+                let = even_odd_tuple[0]
+
+
+even_odd_generator = even_odd()
+print(next(even_odd_generator))
+print(next(even_odd_generator))
+print(next(even_odd_generator))
+print(next(even_odd_generator))
+print(next(even_odd_generator))
+
+
+# def even_odd():
+#     value = 'even'
+#     while True:
+#         yield value
+#         if value == 'even':
+#             value = "odd"
+#         else:
+#             value = "even"
+
+
+# def even_odd():
+#     string = ["even", "odd"]
+#     while True:
+#         for letter in string:
+#             yield letter
+# even_odd_generator = even_odd()
+# print(next(even_odd_generator))
+# print(next(even_odd_generator))
+# print(next(even_odd_generator))
+# print(next(even_odd_generator))
+
+
+
+# Experiment
+
+# def experiment():
+#     x = int(input('enter any number for sum '))
+#     while True:
+#         yield x
+#         x += 1
+#
+#
+# param = experiment()
+# print(next(param))
+# print(next(param))
+# print(next(param))
+# print(next(param))
+# print(next(param))
+# print(next(param))
