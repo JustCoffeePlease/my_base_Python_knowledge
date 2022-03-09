@@ -1,0 +1,48 @@
+import sqlite3
+
+# connect() устанавливает связь с БД, если она существует
+# или создает ее вновь
+
+conn = sqlite3.connect('strudents_db_by_python.db')
+cursor = conn.cursor()
+
+#cursor.execute("CREATE TABLE students (first_name TEXT, last_name TEXT, age INTEGER);")
+
+# Вставка новых данных в создвнную/существующую таблицу
+# cursor.execute ("INSERT INTO students VALUES ('James', 'Brown', 21);")
+# Мы можем использовать переменные для создания запроса
+#insert_query = "INSERT INTO students VALUES ('Jim', 'Bim', 24);"
+
+# Второй способ внесения новых данных (Небезопасный)
+first_name = 'Jack'
+last_name = 'Daniels'
+age = 26
+#insert_query = f"INSERT INTO students VALUES ('{first_name}', '{last_name}', {age});"
+#cursor.execute(insert_query)
+
+# Рекомендуемый способ
+insert_query = "INSERT INTO students VALUES (?, ?, ?);"
+
+#cursor.execute(insert_query, (first_name, last_name, age))
+
+# Данные могут поступать так же в форме tuple
+captain = ('Captain', 'Morgan', 18)
+#cursor.execute(insert_query, captain)
+
+# Возможно помещать в БД значения из списка
+
+students = [
+	('Jose', 'Cuervo', 27),
+	('Graf', 'Ledof', 19),
+	('Ron', 'Barcelo', 24)
+]
+# Первый вариант
+#for student in students:
+#	cursor.execute(insert_query, student)
+
+
+# Второй вариант
+cursor.executemany(insert_query, students)
+
+conn.commit()
+conn.close()
