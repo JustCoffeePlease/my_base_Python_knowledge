@@ -1,0 +1,31 @@
+import sqlite3
+
+conn = sqlite3.connect('strudents_db_by_python.db')
+cursor = conn.cursor()
+
+#cursor.execute("SELECT * FROM students;")
+#cursor.execute("SELECT * FROM students WHERE age IS 22;")
+
+# Будем печатать каждую строку БД
+#for row in cursor:
+#	print(row)
+
+#print(cursor.fetchone())
+#print(cursor.fetchall())
+
+# Изменим данные БД
+#cursor.execute("UPDATE students SET age = 18 WHERE first_name IS 'Jack';")
+#cursor.execute("UPDATE students SET first_name='Johnnie' WHERE first_name IS 'Johny';")
+#cursor.execute("SELECT * FROM students;")
+#data = cursor.fetchall()
+#[print(row) for row in data]
+
+# Удаление объекта из БД
+cursor.execute("DELETE FROM students WHERE first_name IS 'James';")
+cursor.execute("SELECT * FROM students;")
+
+data = cursor.fetchall()
+[print(row) for row in data]
+
+conn.commit()
+conn.close()
