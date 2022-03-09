@@ -1,0 +1,54 @@
+import sqlite3
+conn = sqlite3.connect('user_for_injection_db.db')
+
+#create_query = "CREATE TABLE users (user_name TEXT, user_password TEXT)"
+
+users = [
+	('jack2112', 'qwerty123'),
+	('paprika 591', '88228'),
+	('richperson', 'zxcv456'),
+	('hackmeifucan', 'p1488p')
+]
+
+#insert_query = "INSERT INTO users VALUES (?, ?)"
+
+user_name = input('Enter your user name: ')
+user_password = input('Enter your password: ')
+
+select_query = f"SELECT * FROM users WHERE user_name = '{user_name}' AND user_password = '{user_password}'"
+
+cursor = conn.cursor()
+
+#cursor.executemany(insert_query, users)
+
+#cursor.execute(create_query)
+
+cursor.execute(select_query)
+data = cursor.fetchone()
+if (data):
+	print("You are logged in")
+else:
+	print("user name or password is wrong")
+
+
+conn.commit()
+
+conn.close()
+
+# При таком коде, в работе с cmd, чтобы взломать БД вводим следующее:
+# Enter your user name: ' or 1=1--
+# Enter your password: ' or 1=1--
+# You are logged in
+
+# Когда пользователь вводит данные, они помещаются в sql запрос
+# "SELECT * FROM users WHERE user_name = '{user_name}' AND user_password = '{user_password}'"
+# Таким образом, запрос выглядит следующим образом:
+# "SELECT * FROM users WHERE user_name = '' or 1=1--' AND user_password = '' or 1=1--'"
+# пустая строка или 1=1 истина, так как 1=1 у нас всегда истина, то мы залогиниваемя
+# запись -- используется для комментирования лишней ковычки . 
+# В итоге 
+
+# Чтобы избежать взлома нужно использовать следующий запрос
+
+# select_query = f"SELECT * FROM users WHERE user_name = '{user_name}' AND user_password = '{user_password}'"
+# cursor.execute(select_query,(user_name, user_password))
