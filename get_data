@@ -1,0 +1,116 @@
+from bs4 import BeautifulSoup
+html_string = """<<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Web Development page</title>
+	<style type="text/css">
+
+		h1{
+			color:blue;
+			background:red
+		}
+
+		li{
+			color: red;
+		}
+
+		#css-li{
+			color: blue;
+		}
+
+		.green{
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<h1>Web Development</h1>
+	<h1>CSKA</h1>
+	<h3 class="green">Programming languages</h3>
+
+		<ol>
+			<li>HTML</li>
+			<li id="css-li">CSS</li>
+			<li class="green bold">javaScript</li>
+			<li class="green" id="python-li">python</li>
+		</ol>
+</body>
+</html>
+"""
+
+
+parsed_html = BeautifulSoup(html_string, 'html.parser')
+
+print(parsed_html.select('li'))
+# output: 
+# [<li>HTML</li>, <li id="css-li">CSS</li>, <li class="green bold">javaScript</li>, <li class="green" id="python-li">python</li>]
+
+print(parsed_html.select('li')[3])
+# output: Получаем полностью html элемент со всеми атрибутами
+# <li class="green" id="python-li">python</li>
+
+# Если мы хотим получить не ко всему элементу, а только
+# к атрибуту, либо к тексту, который находится внутри элемента
+
+html_elem = parsed_html.select('li')[0]
+
+# Для получения текста элемента нужно использовать get_text()
+# Таким образом мы получаем доступ к тексту этого элемента
+print(html_elem.get_text())
+# output: HTML
+
+
+# Получим список всех элементов li, которые есть в коде
+html_elem_list = parsed_html.select('li')
+
+# Далее мы перебираем все элементы из вновь созданного списка
+# и выводим тексты этих элементов
+for html_elem in html_elem_list:
+	print(html_elem.get_text())
+# output:
+# HTML
+# CSS
+# javaScript
+# python
+
+
+# Так же мы можем делать выборку по классу
+green_class_elem_list = parsed_html.select('.green')
+
+for html_elem in green_class_elem_list:
+	print(html_elem.get_text())
+# output:
+# Programming languages
+# javaScript
+# python
+
+# Помимо текста, мы можем запрашивать имена элементов
+# методом .name
+for html_elem in green_class_elem_list:
+	print(html_elem.name)
+# output:
+# h3
+# li
+# li
+
+# Так же мы можем обращаться к атрибутам, например class="green", d="python-li"
+
+for html_elem in parsed_html.select('li'):
+	print(html_elem.attrs)
+# output:
+# {} пустые фигурные скобки, так как в первом элементе li нет атрибутов
+# {'id': 'css-li'}
+# {'class': ['green', 'bold']}
+# {'class': ['green'], 'id': 'python-li'}
+
+
+# Выберем тот элемент, в котором есть класс
+# Мы можем обратиться только к тому атрибуту, в которых есть параметры, определенные
+# в запросе (например 'class')
+html_elem_list = parsed_html.select('li')[3]
+print(html_elem_list.attrs['class'])
+# output:['green']
+print(html_elem_list['class'])
+# output:['green']
