@@ -1,0 +1,149 @@
+from bs4 import BeautifulSoup
+html_string = """<<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Web Development page</title>
+	<style type="text/css">
+
+		h1{
+			color:blue;
+			background:red
+		}
+
+		li{
+			color: red;
+		}
+
+		#css-li{
+			color: blue;
+		}
+
+		.green{
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<h1>Web Development</h1>
+	<h1>CSKA</h1>
+	<h3 class="green">Programming languages</h3>
+
+		<ol>
+			<li>HTML</li>
+			<li id="css-li">CSS</li>
+			<li class="green bold">javaScript</li>
+			<li class="green" id="python-li">python</li>
+		</ol>
+</body>
+</html>
+"""
+
+# мы будем получать данные относительно (relavitely) html-элементов.
+# Например, рассмотрим элемент <body>. Этот элемент включает дочерние
+# элементы, то есть своих потомков, которые окружены открывающим 
+# и закрывающим тегом <body></body>. Внутри находятся его потомки,
+# то есть <ol></ol>. элементы <body> и <head> находятся в своем
+# родителе <html>. Относительно внешнего элементы - внутренний 
+# называется потомком, и наоборот, относительно внутренних элементов
+# внешний называется потомком. Элементы, которые находятся на одном
+# иерархическом уровне называются sibling.
+
+parsed_html = BeautifulSoup(html_string, 'html.parser')
+ 
+# Получение доступа к элементу </body>
+data = parsed_html.body
+print(data)
+# output:
+# <body>
+# <h1>Web Development</h1>
+# <h1>CSKA</h1>
+# <h3 class="green">Programming languages</h3>
+# <ol>
+# <li>HTML</li>
+# <li id="css-li">CSS</li>
+# <li class="green">javaScript</li>
+# <li>python</li>
+# </ol>
+# </body>
+
+# Обращение к контенту элемента
+data_1 =parsed_html.body.contents
+print(data_1)
+# output:
+# Получаем данные в виде списка:
+# ['\n', <h1>Web Development</h1>, '\n', <h1>CSKA</h1>, '\n', <h3 class="green">Programming languages</h3>, '\n', <ol>
+# <li>HTML</li>
+# <li id="css-li">CSS</li>
+# <li class="green">javaScript</li>
+# <li>python</li>
+# </ol>, '\n']
+# содержимое <ol></ol> мы получаем без запятых, так как это потомки <ol>
+# Так же мы получаем знаки перехода на новую строку, так как это тоже элемент
+# списка. При вызове элемента <h1>, в списке он находится вторым
+
+data_2 = parsed_html.body.contents[1]
+# print(data_2)
+
+# получим доступ к содержимому <ol> (список внутри <ol>)
+data_3 = parsed_html.body.contents[7].contents
+# print(data_3)
+
+# Обратимся к первому элементу <h1>Web Development</h1>
+data_4 = parsed_html.body.contents[1]
+# Если мы хотим получить следующие элементы того же уровня
+# (<h1>CSKA</h1>, <h3 class="green">Programming languages</h3>, <ol>),
+# мы можем обращаться к следующиму sibling при помощи next_sibling
+data_5 = parsed_html.body.contents[1].next_sibling.next_sibling
+print(data_5)
+# output:
+# <h1>CSKA</h1>
+
+# Так же мы можем получить родителя, например, если мы получим 
+# доступ к родителю <li id="css-li">CSS</li> по id
+data_6 = parsed_html.find(id="css-li").parent
+print(data_6)
+# output:
+# <ol>
+# <li>HTML</li>
+# <li id="css-li">CSS</li>
+# <li class="green">javaScript</li>
+# <li>python</li>
+# </ol>
+# Вызвав .parent еще раз, мы получим <body> со всем содержимым
+
+# помимо next_sibling есть еще previous_sibling
+data_7 = parsed_html.find(id="css-li").parent.previous_sibling.previous_sibling
+print(data_7)
+# output:
+# <h3 class="green">Programming languages</h3>
+
+# Рассмотрим как делать обращение при помощи методов
+data_8 = parsed_html.find(id="css-li").find_next_sibling()
+print(data_8)
+# output: <li class="green">javaScript</li>
+# .find_next_sibling() позволяет найти следующий элемент того же уровня,
+# игнорируя знаки перехода на новые строки
+# так же есть метод .find_previous_sibling()
+
+# Мы можем делать обращение, указывая определенные атрибуты
+data_9 = parsed_html.find(id="css-li").find_next_sibling(id="python-li")
+print(data_9)
+# output: <li class="green" id="python-li">python</li>
+# То есть, мы получаем следующий sibling, у которого есть указанный id
+# так же можно указывать class
+
+# Так же мы можем получить родителя
+data_10 = parsed_html.find(id="css-li").find_next_sibling(id="python-li").find_parent()
+print(data_10)
+# output:
+# <ol>
+# <li>HTML</li>
+# <li id="css-li">CSS</li>
+# <li class="green bold">javaScript</li>
+# <li class="green" id="python-li">python</li>
+# </ol>
+
+
+# Так же мы можем вызывать метод findChildren(), получая список всех потомков
