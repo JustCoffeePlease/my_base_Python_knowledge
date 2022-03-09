@@ -1,0 +1,58 @@
+import csv
+
+#with open('students.csv','w') as file:
+#	csv_writer = csv.writer(file)
+
+# Методом writerow мы записываем в файл вносимые данные
+
+#	csv_writer.writerow(['First name', 'Last name', 'Age'])
+#	csv_writer.writerow(['Jake', 'White', 24])
+#	csv_writer.writerow(['Jane', 'Black', 23])
+
+# Таким образом, в папке с исходным кодом мы создали файл students.csv
+
+# Далее, для примера, мы считаем данные с файла csv_cars.csv
+# и во вновь созданный файл будем записывать производителя и модель
+# Во вновь созданный файл поместим Make и Model
+
+# Для проведения данной операции есть два способа.
+
+# Первый способ
+
+#with open('csv_cars.csv') as file:
+#	csv_reader = csv.reader(file)
+#	print(csv_reader)
+# Output: <_csv.reader object at 0x00000209A4DAAE00>
+#	make_model_list = []
+#	for car in csv_reader:
+#		make_model_list.append([car[1], car[2]])
+		#make_model_list.append(make_model)
+#	print(make_model_list)
+
+# Output:
+# [['Ford', 'E350'], ['Chevy', 'Venture "Extended Edition"'], 
+# ['Chevy', 'Venture "Extended Edition, Very Large"'], 
+# ['Jeep', 'Grand Cherokee']]
+
+# Теперь запишем в новый файл эти значения
+
+#with open('cars_make_model.csv', 'w') as file:
+#	csv_writer = csv.writer(file)
+#	for row in make_model_list:
+#		csv_writer.writerow(row)
+
+
+# Второй способ:
+
+with open('csv_cars.csv') as file:
+	csv_reader = csv.reader(file)
+	
+	with open('cars_make_model_1.csv', 'w') as file:
+		csv_writer = csv.writer(file)
+		for row in csv_reader:
+			csv_writer.writerow([row[1], row[2]])
+
+# В данном способе оба варианта открыты, один для чтения,
+# а другой для записи, так как в блоке with для чтения
+# открыт блок для записи. Если мы захотим вне открытого блока
+# записать файл, мы получим ошибку.
