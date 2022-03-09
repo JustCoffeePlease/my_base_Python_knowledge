@@ -1,0 +1,59 @@
+# https://www.w3schools.com/sql/sql_insert.asp
+
+#CREATE TABLE students(
+#
+#	first_name TEXT,
+#	last_name TEXT,
+#	age INTEGER
+#);
+#
+#CREATE TABLE employees(
+#
+#	first_name TEXT,
+#	last_name TEXT,
+#	age INTEGER
+#);
+#
+#SELECT * FROM students;
+
+
+#.read file_name.sql
+
+# CRUD - Create, Read, Update, Delete
+
+#Create
+
+INSERT INTO employees (first_name, last_name, age) VALUES ('Jack', 'White', '25');
+INSERT INTO employees (first_name, last_name, age) VALUES ('Jane', 'Black', '25');
+INSERT INTO employees (first_name, last_name, age) VALUES ('Jim', 'Bim', '21');
+INSERT INTO employees (first_name, last_name, age) VALUES ('Jack', 'Daniels', '19');
+INSERT INTO employees (first_name, last_name, age) VALUES ('Walter', 'Jameson', '23');
+INSERT INTO employees (first_name, last_name, age) VALUES ('Old', 'Smugler', '24');
+INSERT INTO employees (first_name, last_name, age) VALUES ('Famous', 'Groose', '19');
+INSERT INTO employees (first_name, last_name, age) VALUES ('Capitan', 'Morgan', '22');
+
+# Read
+
+SELECT * FROM employees;
+SELECT first_name FROM employees;
+SELECT first_name, age FROM employees;
+
+SELECT first_name, age FROM employees WHERE first_name IS 'Jack';
+SELECT first_name, age FROM employees WHERE age IS '19';
+SELECT last_name, age FROM employees WHERE last_name IS NOT 'Black';
+SELECT last_name, age FROM employees WHERE last_name IS NOT 'Black' AND age IS NOT '17';
+SELECT last_name, age FROM employees WHERE age < 24;
+SELECT first_name, age FROM employees WHERE first_name LIKE 'Ja%';
+SELECT * FROM employees WHERE first_name LIKE '%ck' OR last_name LIKE '%e';
+ 
+# Update
+
+UPDATE employees SET first_name='Jimm' WHERE first_name='Jim';
+UPDATE employees SET first_name='Jim', age=19 WHERE first_name='Jimm';
+UPDATE employees SET age=28 WHERE first_name='Jane' OR last_name='White'
+
+# Delete
+
+DELETE FROM employees WHERE age=25;
+DELETE FROM employees WHERE age=19 AND last_name='White';
+DELETE FROM employees;
