@@ -1,0 +1,117 @@
+####################################################
+file: csv_cars.csv
+####################################################
+Year,Make,Model,Description,Price
+1997,Ford,E350,"ac, abs, moon",3000.00
+1999,Chevy,"Venture ""Extended Edition""","",4900.00
+1999,Chevy,"Venture ""Extended Edition, Very Large""",,5000.00
+1996,Jeep,Grand Cherokee,"MUST SELL!
+air, moon roof, loaded",4799.00
+
+####################################################
+file: cars1.csv
+####################################################
+Year;Make;Model;Length
+1997;Ford;E350;2,35
+2000;Mercury;Cougar;2,38
+
+####################################################
+file: car_reader.py
+####################################################
+# csv (comma-separated values) файлы это текстовые файлы,
+# которые используют для разделения значений запятые.
+# Они хранят табличные данные, такие как числа,
+# текст и тд. Каждая строка файла -запись данных.
+# Каждая строка содержит одно или более поля, разделенные
+# запятыми. 
+
+#import csv
+
+#with open('csv_cars.csv') as file:
+	#csv_reader = csv.reader(file)
+
+# В переменной csv_reader мы получаем итератор,
+# в котором мы можем перебирать каждую строку и она 
+# будет выдаваться в виде списка
+
+	#next(csv_reader)
+	#for car in csv_reader:
+		#print(car)
+
+# Output:
+# ['Year', 'Make', 'Model', 'Description', 'Price']
+# ['1997', 'Ford', 'E350', 'ac, abs, moon', '3000.00']
+# ['1999', 'Chevy', 'Venture "Extended Edition"', '', '4900.00']
+# ['1999', 'Chevy', 'Venture "Extended Edition, Very Large"', '', '5000.00']
+# ['1996', 'Jeep', 'Grand Cherokee', 'MUST SELL!\nair, moon roof, loaded', '4799.00']
+
+		#print(f'{car[1]} {car[2]} costs {car[4]}')
+
+# Output: (без учета строки next(csv_reader))
+# Make Model costs Price
+# Ford E350 costs 3000.00
+# Chevy Venture "Extended Edition" costs 4900.00
+# Chevy Venture "Extended Edition, Very Large" costs 5000.00
+# Jeep Grand Cherokee costs 4799.00
+
+# Чтобы избавиться от заголовков, так как csv_reader у нас итератор,
+# мы можем применить функцию next(csv_reader) перед запуском цикла.
+# Тогда мы получим:
+# Ford E350 costs 3000.00
+# Chevy Venture "Extended Edition" costs 4900.00
+# Chevy Venture "Extended Edition, Very Large" costs 5000.00
+# Jeep Grand Cherokee costs 4799.00
+
+# Если мы не хотим перебирать все элементы построчно,
+# мы можем получить список
+
+	#data_list = list(csv_reader)
+	#print(data_list)
+
+# Получаем список в списке, где первый список это заголовки,
+# а последующие это строки с данными.
+
+# Так же можно использовать метод DictReader(), для того, чтобы
+# формировать обращения по имени
+
+	#csv_reader = csv.DictReader(file)
+	# next(csv_reader)
+	#for car in csv_reader:
+		#print(car)
+
+# Output: 
+# Получаем данные виде ordered dict
+# Так же, нет необходимости использовать next(csv_reader),
+# так как названия столбцов автоматически извлекаются в качестве ключей
+# при помощи DictReader()
+
+# Далее уже можно обращаться по ключам
+		#print(f'{car["Make"]} {car["Model"]} costs {car["Price"]}')
+
+# Output: 
+# Ford E350 costs 3000.00
+# Chevy Venture "Extended Edition" costs 4900.00
+# Chevy Venture "Extended Edition, Very Large" costs 5000.00
+# Jeep Grand Cherokee costs 4799.00
+
+# Рассмотрим случай, когда у нас данные разделены другими знаками
+# Когда у нас один разделитель, мы должны этот символ указать 
+# в качестве второго значения в DictReader()
+
+
+import csv
+with open('cars1.csv') as file1:
+	#csv_reader_1 = csv.DictReader(file1, delimiter=';')
+	#for car in csv_reader_1:
+		#print(f'{car["Make"]} {car["Model"]} is {car["Length"]} m')
+
+# Output:
+# Ford E350 is 2,35 m
+# Mercury Cougar is 2,38 m 
+
+
+# Получим тот же результат, используя метод reader()
+	csv_reader_1 = csv.reader(file1, delimiter=';')
+	csv_reader_1.__next__()
+	for car in csv_reader_1:
+		print(f'{car[1]} {car[2]} is {car[3]} m')
