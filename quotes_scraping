@@ -1,0 +1,35 @@
+# https://quotes.toscrape.com/
+# Для того, чтобы получать контент с web
+# используем модуль request
+import requests
+from bs4 import BeautifulSoup
+url = 'https://quotes.toscrape.com/'
+response = requests.get(url)
+
+html_data = BeautifulSoup(response.text, 'html.parser')
+quotes = html_data.find_all(class_='quote')
+# Распечатаем каждую цитату.
+# Все цитаты находятся в классах class="text"
+# так как quotes мы получаем в качестве списка
+# запустим цикл for и выведем нужные классы
+for quote in quotes:
+#	print(quote.find(class_='text'))
+
+# output: мы получили все элементы span с классом text
+# Чтобы вывести сам текст, добавим в используемом
+# методе find() доп метод get_text()
+
+	print(quote.find(class_='text').get_text())
+
+# Помимо самого текста необходимо извлечь автора и теги
+# автор находится в class="author"
+# <small class="author" itemprop="author">Albert Einstein</small>
+
+	print(quote.find(class_="author").get_text())
+
+# output: мы получили цитаты и авторов
+# Далее там нужно вывести теги. 
+# Они расположены в атрибуте content класса class="keywords"
+# <meta class="keywords" itemprop="keywords" content="change,deep-thoughts,thinking,world">
+# Для этого нам не нужен get_text(), нам нужен сам атрибут content
+	print(quote.find(class_="keywords")['content'])
