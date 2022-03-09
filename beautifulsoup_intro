@@ -1,0 +1,106 @@
+# Для web scrapping необходимо использовать библиотеку BeautifulSoup
+# Импортировав ее мы сможем парсить html код
+# Возьмем для примера код, который создавали ранее 
+# Когда мы парсим html код при помощи BeautifulSoup,
+# каждый тег помещается в свой объект
+
+from bs4 import BeautifulSoup
+html_string = """<<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Web Development page</title>
+	<style type="text/css">
+
+		h1{
+			color:blue;
+			background:red
+		}
+
+		li{
+			color: red;
+		}
+
+		#css-li{
+			color: blue;
+		}
+
+		.green{
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<h1>Web Development</h1>
+	<h1>CSKA</h1>
+	<h3 class="green">Programming languages</h3>
+
+		<ol>
+			<li>HTML</li>
+			<li id="css-li">CSS</li>
+			<li class="green">javaScript</li>
+			<li>python</li>
+		</ol>
+</body>
+</html>
+"""
+
+# Создадим переменную с присвоенным объектом BeautifulSoup
+# Первым параметром является рассматриваемый html код,
+# Второй параметром указываем формат, который будем распозавать
+# BeautifulSoup может распознавать как html так и xml коды
+
+parsed_html = BeautifulSoup(html_string, 'html.parser')
+
+print(parsed_html)
+# output: получаем текст html кода.
+
+print(type(parsed_html))
+# output: <class 'bs4.BeautifulSoup'>
+# теперь это не простая строка класса bs4
+# поэтому мы можем использовать разные методы этого объекта для получения
+# нужных параметров
+
+print(parsed_html.body)
+# output: получаем объект <body>, то есть все, что заключено в <body></body>
+
+print(parsed_html.body.h1)
+# output: <h1>Web Development</h1>
+
+print(parsed_html.body.ol.li)
+# output: <li>HTML</li>
+# так как li по иерархии находится ниже ol, в запросе сначала записываем ol,
+# а потом li
+
+# Такой же результат мы можем получить, вызвав метод find()
+print(parsed_html.find('li'))
+print(type(parsed_html.find('li')))
+# output: <class 'bs4.element.Tag'> Таким образом, на выводе мы получаем не строку,
+# а тег
+
+
+print(parsed_html.find_all('li'))
+# output: [<li>HTML</li>, <li id="css-li">CSS</li>, <li class="green">javaScript</li>, <li>python</li>]
+print(type(parsed_html.find_all('li')))
+# output:<class 'bs4.element.ResultSet'>
+
+# Так же мы можем найти элемент по id или по классу
+print(parsed_html.find(id="css-li"))
+# output: <li id="css-li">CSS</li>
+
+
+print(parsed_html.select('#css-li')[0])
+# output:<li id="css-li">CSS</li>
+
+print(parsed_html.find_all(class_="green"))
+# output:[<h3 class="green">Programming languages</h3>, <li class="green">javaScript</li>]
+
+print(parsed_html.select(".green")[1])
+# output: <li class="green">javaScript</li>
+
+print(parsed_html.select('li')[3])
+# output: <li>python</li>
+# При помощи select() Мы всегда получаем список, даже если в нем только один элемент
+# Дальнейшую работу мы можем осуществлять посредством вызова индекса конкретного элемента
+
